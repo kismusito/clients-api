@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
-import { MESSAGE_HANDLER } from "src/utils/enums/message-handler";
+import { MESSAGE_HANDLER } from "../utils/enums/message-handler";
 
 import { Client } from "./models/client.model";
 
@@ -26,13 +26,13 @@ export class ClientService {
     }
   }
 
-  async createClient(request: Request, response: Response) {
+  async createClient(request: Request, response: Response): Promise<Response> {
     try {
       const { email, name, bankAccount, document } = request.body;
 
       const clientByEmail = await this.clientRepository.findOne({ email });
       if (clientByEmail) {
-        response.status(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: MESSAGE_HANDLER.EMAIL_ALREADY_TAKEN,
         });
       }
@@ -41,7 +41,7 @@ export class ClientService {
         document,
       });
       if (clientByDocument) {
-        response.status(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: MESSAGE_HANDLER.DOCUMENT_ALREADY_TAKEN,
         });
       }
@@ -55,12 +55,12 @@ export class ClientService {
 
       const savedClient = await client.save();
 
-      response.status(StatusCodes.CREATED).json({
+      return response.status(StatusCodes.CREATED).json({
         message: MESSAGE_HANDLER.CLIENT_CREATED,
         client: savedClient,
       });
     } catch (error) {
-      response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: error.message,
         message: StatusCodes.INTERNAL_SERVER_ERROR,
       });
@@ -142,7 +142,7 @@ export class ClientService {
       await clientById.remove();
 
       response.status(StatusCodes.OK).json({
-        clientID: clientById._id,
+        client: clientById,
         message: MESSAGE_HANDLER.CLIENT_DELETED,
       });
     } catch (error) {

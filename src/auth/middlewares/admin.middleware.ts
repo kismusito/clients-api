@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { MESSAGE_HANDLER } from "src/utils/enums/message-handler";
-import { ROL } from "src/utils/enums/roles";
+import { MESSAGE_HANDLER } from "../../utils/enums/message-handler";
+import { ROL } from "../../utils/enums/roles";
 import { RequestUser } from "../types/request-user.type";
 
 export const adminMiddleware = (

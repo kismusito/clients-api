@@ -4,7 +4,7 @@ import * as passport from "passport";
 import { ClientService } from "./clients.service";
 import { createClientValidator } from "./validators/create-client.validator";
 import { updateClientValidator } from "./validators/update-client.validator";
-import { adminMiddleware } from "src/auth/middlewares/admin.middleware";
+import { adminMiddleware } from "../auth/middlewares/admin.middleware";
 
 export class ClientController {
   private clientService: ClientService;
@@ -47,7 +47,7 @@ export class ClientController {
     return this.clientService.getClients(request, response);
   }
 
-  private createClient(request: Request, response: Response): Promise<void> {
+  private createClient(request: Request, response: Response): Promise<Response> {
     return this.clientService.createClient(request, response);
   }
 

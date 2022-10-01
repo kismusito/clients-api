@@ -1,10 +1,10 @@
 import * as passport from "passport";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 
-import { CONFIG } from "src/utils/config";
+import { CONFIG } from "../../utils/config";
 
-import { MESSAGE_HANDLER } from "src/utils/enums/message-handler";
-import { User } from "src/auth/models/user.model";
+import { MESSAGE_HANDLER } from "../../utils/enums/message-handler";
+import { User } from "../../auth/models/user.model";
 
 export class PassportConfig {
   private userRepository: typeof User;

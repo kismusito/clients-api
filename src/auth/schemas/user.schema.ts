@@ -1,6 +1,6 @@
 import { CallbackWithoutResultAndOptionalError, Schema } from "mongoose";
-import { ROL } from "src/utils/enums/roles";
-import { TextEncrypt } from "src/utils/helpers/encryptor";
+import { ROL } from "../../utils/enums/roles";
+import { TextEncrypt } from "../..//utils/helpers/encryptor";
 import { UserData } from "../types/user-data.type";
 
 const UserSchema = new Schema<UserData>({

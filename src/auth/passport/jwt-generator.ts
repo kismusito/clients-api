@@ -1,5 +1,5 @@
 import * as jwt from "jsonwebtoken";
-import { CONFIG } from "src/utils/config";
+import { CONFIG } from "../../utils/config";
 import { UserData } from "../types/user-data.type";
 
 export class JWTGenerator {
