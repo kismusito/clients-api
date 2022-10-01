@@ -10,9 +10,9 @@ export const adminMiddleware = (
   next: NextFunction
 ) => {
   const { user } = req;
-
+  
   if (user.rol !== ROL.ADMINISTRATOR) {
-    res.status(StatusCodes.FORBIDDEN).json({
+    return res.status(StatusCodes.FORBIDDEN).json({
       message: MESSAGE_HANDLER.FORBIDDEN_RESOURCE,
     });
   }

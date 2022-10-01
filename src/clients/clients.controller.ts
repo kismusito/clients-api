@@ -43,7 +43,7 @@ export class ClientController {
       );
   }
 
-  private getClients(request: Request, response: Response): Promise<void> {
+  private getClients(request: Request, response: Response): Promise<Response> {
     return this.clientService.getClients(request, response);
   }
 
@@ -51,11 +51,11 @@ export class ClientController {
     return this.clientService.createClient(request, response);
   }
 
-  private updateClient(request: Request, response: Response): Promise<void> {
+  private updateClient(request: Request, response: Response): Promise<Response> {
     return this.clientService.updateClient(request, response);
   }
 
-  private deleteClient(request: Request, response: Response): Promise<void> {
+  private deleteClient(request: Request, response: Response): Promise<Response> {
     return this.clientService.deleteClient(request, response);
   }
 }

@@ -31,7 +31,7 @@ export class AuthService {
           .status(StatusCodes.BAD_REQUEST)
           .json({ message: MESSAGE_HANDLER.INVALID_CREDENTIALS });
       }
-
+      
       const jwtGenerator = new JWTGenerator(userByEmail);
       return response.status(StatusCodes.OK).json({
         message: ReasonPhrases.OK,

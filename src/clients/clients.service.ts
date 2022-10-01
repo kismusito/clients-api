@@ -11,15 +11,15 @@ export class ClientService {
     this.clientRepository = Client;
   }
 
-  async getClients(request: Request, response: Response) {
+  async getClients(request: Request, response: Response): Promise<Response> {
     try {
       const clients = await this.clientRepository.find();
-      response.status(StatusCodes.OK).json({
+      return response.status(StatusCodes.OK).json({
         message: ReasonPhrases.OK,
         clients,
       });
     } catch (error) {
-      response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: error.message,
         message: StatusCodes.INTERNAL_SERVER_ERROR,
       });
@@ -67,13 +67,13 @@ export class ClientService {
     }
   }
 
-  async updateClient(request: Request, response: Response) {
+  async updateClient(request: Request, response: Response): Promise<Response> {
     try {
       const { email, name, bankAccount, document, _id } = request.body;
 
       const clientById = await this.clientRepository.findOne({ _id });
       if (!clientById) {
-        response.status(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: MESSAGE_HANDLER.CLIENT_NOT_FOUND,
         });
       }
@@ -81,7 +81,7 @@ export class ClientService {
       if (email && email !== clientById.email) {
         const clientByEmail = await this.clientRepository.findOne({ email });
         if (clientByEmail) {
-          response.status(StatusCodes.BAD_REQUEST).json({
+          return response.status(StatusCodes.BAD_REQUEST).json({
             message: MESSAGE_HANDLER.EMAIL_ALREADY_TAKEN,
           });
         }
@@ -92,7 +92,7 @@ export class ClientService {
           document,
         });
         if (clientByDocument) {
-          response.status(StatusCodes.BAD_REQUEST).json({
+          return response.status(StatusCodes.BAD_REQUEST).json({
             message: MESSAGE_HANDLER.DOCUMENT_ALREADY_TAKEN,
           });
         }
@@ -116,37 +116,37 @@ export class ClientService {
 
       const savedClient = await clientById.save();
 
-      response.status(StatusCodes.OK).json({
+      return response.status(StatusCodes.OK).json({
         client: savedClient,
         message: MESSAGE_HANDLER.CLIENT_UPDATED,
       });
     } catch (error) {
-      response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: error.message,
         message: StatusCodes.INTERNAL_SERVER_ERROR,
       });
     }
   }
 
-  async deleteClient(request: Request, response: Response) {
+  async deleteClient(request: Request, response: Response): Promise<Response> {
     try {
       const { id } = request.params;
 
       const clientById = await this.clientRepository.findOne({ _id: id });
       if (!clientById) {
-        response.status(StatusCodes.BAD_REQUEST).json({
+        return response.status(StatusCodes.BAD_REQUEST).json({
           message: MESSAGE_HANDLER.CLIENT_NOT_FOUND,
         });
       }
 
       await clientById.remove();
 
-      response.status(StatusCodes.OK).json({
+      return response.status(StatusCodes.OK).json({
         client: clientById,
         message: MESSAGE_HANDLER.CLIENT_DELETED,
       });
     } catch (error) {
-      response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: error.message,
         message: StatusCodes.INTERNAL_SERVER_ERROR,
       });

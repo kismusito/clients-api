@@ -26,7 +26,7 @@ export class PassportConfig {
           jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         },
         async (payload, done) => {
-          const user = await this.userRepository.findOne({ id: payload.sub });
+          const user = await this.userRepository.findOne({ _id: payload.sub });
 
           if (!user) {
             return done({ message: MESSAGE_HANDLER.USER_NOT_FOUND }, false);
